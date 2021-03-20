@@ -6,10 +6,19 @@ set tabstop=2 softtabstop=2
 set clipboard=unnamedplus
 set ignorecase
 set smartcase
+set mouse=a
 set shiftwidth=0
 set autoindent
 set smartindent
 set foldmethod=indent
+set showtabline=2
+set cursorline
+set pumheight=10
+set ruler
+set number
+set t_Co=256
+set splitbelow
+set splitright
 au FileType * set fo-=c fo-=r fo-=o
 
 "Ruby formatter
@@ -32,9 +41,6 @@ set wildmode=longest,list,full
 
 " Indente Guides
 let g:indent_guides_enable_on_vim_startup = 1
-
-" Opening windows
-set splitbelow splitright
 
 " Center screen when inserting
 autocmd InsertEnter * norm zz
@@ -67,7 +73,16 @@ hi Normal guibg=NONE ctermbg=NONE
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 map <C-t> :NERDTreeToggle<CR>
 
+" Leader
 let mapleader = " "
+
+"Moving Command
+nnoremap <leader>j :m .+1<CR>==
+nnoremap <leader>k :m .-2<CR>==
+inoremap <leader>j <Esc>:m .+1<CR>==gi
+inoremap <leader>k <Esc>:m .-2<CR>==gi
+vnoremap <leader>j :m '>+1<CR>gv=gv
+vnoremap <leader>k :m '<-2<CR>gv=gv
 
 " Save and Quit
 map <C-s> :w<CR>
