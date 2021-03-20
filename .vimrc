@@ -52,7 +52,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'mattn/emmet-vim'
 Plug 'preservim/nerdtree'
 Plug 'tpope/vim-surround'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'alvan/vim-closetag'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -61,6 +60,9 @@ Plug 'cocopon/iceberg.vim'
 Plug 'ruby-formatter/rufo-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
+Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 call plug#end()
 
@@ -75,6 +77,9 @@ map <C-t> :NERDTreeToggle<CR>
 
 " Leader
 let mapleader = " "
+
+"FzF
+map <C-P> :FZF<CR>
 
 "Moving Command
 nnoremap <leader>j :m .+1<CR>==
