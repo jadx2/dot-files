@@ -1,5 +1,4 @@
 syntax on
-
 set nu
 set expandtab
 set tabstop=2 softtabstop=2
@@ -77,6 +76,11 @@ map <C-t> :NERDTreeToggle<CR>
 
 " Leader
 let mapleader = " "
+
+" Ultisnips trigger
+let g:UltiSnipsExpandTrigger="<leader><tab>"
+let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
+let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
 
 "FzF
 map <C-P> :FZF<CR>
