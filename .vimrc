@@ -27,8 +27,7 @@ let g:rufo_auto_formatting = 1
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
-let g:airline_theme='solarized'
-let g:airline_solarized_bg='dark'
+let g:airline_theme='deus'
 let g:airline#extensions#coc#enabled = 1
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 let g:airline_symbols.branch = ''
@@ -62,11 +61,12 @@ Plug 'tpope/vim-commentary'
 Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'dracula/vim', { 'as': 'dracula' }
 
 call plug#end()
 
 " Color Scheme
-colorscheme iceberg
+colorscheme dracula
 set background=dark
 hi Normal guibg=NONE ctermbg=NONE
 

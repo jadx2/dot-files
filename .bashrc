@@ -79,9 +79,6 @@ if ${use_color} ; then
 	alias grep='grep --colour=auto'
 	alias egrep='egrep --colour=auto'
 	alias fgrep='fgrep --colour=auto'
-	alias tmf='dev01.sh'
-  alias tmb='dev02.sh'
-	alias tmk='tmux kill-server'
 else
 	if [[ ${EUID} == 0 ]] ; then
 		# show root@ when we don't have colors
@@ -98,6 +95,8 @@ alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
 alias np='nano -w PKGBUILD'
 alias more=less
+alias kt='kitty --session ~/.config/kitty/startup.conf'
+alias icat='kitty +kitten icat'
 
 xhost +local:root > /dev/null 2>&1
 
@@ -140,8 +139,8 @@ ex ()
     echo "'$1' is not a valid file"
   fi
 }
-export PATH=$PATH:$HOME/scripts
 
+neofetch
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
