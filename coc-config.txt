@@ -1,0 +1,22 @@
+# Coc-config
+
+{
+  "coc.preferences.formatOnSaveFiletypes": ["css", "markdown", "javascript", "html", "jsx", "ruby", "eruby", "scss", "javascriptreact"],
+  "prettier.printWidth": 60,
+  "prettier.tabWidth": 2,
+  "prettier.trailingComma": "es5",
+  "prettier.singleQuote": true,
+  "emmet.includeLanguages": {"eruby": "html", "javascript": "javascriptreact", "jsx": "javascriptreact"}
+}
+
+# Coc-extensions
+
+coc-prettier
+coc-json
+coc-eslint
+coc-pairs
+coc-emmet
+coc-cssmodules
+coc-tsserver
+coc-solargraph
+coc-css

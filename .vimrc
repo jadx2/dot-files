@@ -20,6 +20,38 @@ set splitbelow
 set splitright
 au FileType * set fo-=c fo-=r fo-=o
 
+" Tabline
+fu! MyTabLabel(n)
+let buflist = tabpagebuflist(a:n)
+let winnr = tabpagewinnr(a:n)
+let string = fnamemodify(bufname(buflist[winnr - 1]), ':t')
+return empty(string) ? '[unnamed]' : string
+endfu
+
+fu! MyTabLine()
+let s = ''
+for i in range(tabpagenr('$'))
+" select the highlighting
+    if i + 1 == tabpagenr()
+    let s .= '%#TabLineSel#'
+    else
+    let s .= '%#TabLine#'
+    endif
+
+    " display tabnumber (for use with <count>gt, etc)
+    let s .= ' '. (i+1) . ' ' 
+
+    " the label is made by MyTabLabel()
+    let s .= ' %{MyTabLabel(' . (i + 1) . ')} '
+
+    if i+1 < tabpagenr('$')
+        let s .= ' |'
+    endif
+endfor
+return s
+endfu
+set tabline=%!MyTabLine()
+
 "Ruby formatter
 let g:rufo_auto_formatting = 1
 
@@ -27,7 +59,7 @@ let g:rufo_auto_formatting = 1
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
-let g:airline_theme='deus'
+let g:airline_theme='nord'
 let g:airline#extensions#coc#enabled = 1
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 let g:airline_symbols.branch = ''
@@ -54,19 +86,18 @@ Plug 'alvan/vim-closetag'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'cocopon/iceberg.vim' 
 Plug 'ruby-formatter/rufo-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'arcticicestudio/nord-vim'
 
 call plug#end()
 
 " Color Scheme
-colorscheme dracula
+colorscheme nord
 set background=dark
 hi Normal guibg=NONE ctermbg=NONE
 
@@ -85,6 +116,10 @@ let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
 "FzF
 map <C-P> :FZF<CR>
 
+" Increase pane size
+nnoremap + :vertical res +5<CR>
+nnoremap - :vertical res -5<CR>
+
 "Moving Command
 nnoremap <leader>j :m .+1<CR>==
 nnoremap <leader>k :m .-2<CR>==
@@ -96,6 +131,10 @@ vnoremap <leader>k :m '<-2<CR>gv=gv
 " Save and Quit
 map <C-s> :w<CR>
 map <C-Q> :q!<CR>
+
+" Move by block of code
+map <S-k> {
+map <S-J> }
 
 " Autocomment
 map <C-c> gcc
@@ -116,8 +155,8 @@ map <C-k> <C-w>k
 map <C-l> <C-w>l
 
 " Tab switching
-map <C-n> gt
-map <C-N> gT
+map <leader>l gt
+map <leader>h gT
 nnoremap <leader>1 1gt
 nnoremap <leader>2 2gt
 nnoremap <leader>3 3gt
@@ -194,17 +233,17 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+" nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
+" function! s:show_documentation()
+"   if (index(['vim','help'], &filetype) >= 0)
+"     execute 'h '.expand('<cword>')
+"   elseif (coc#rpc#ready())
+"     call CocActionAsync('doHover')
+"   else
+"     execute '!' . &keywordprg . " " . expand('<cword>')
+"   endif
+" endfunction
 
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
