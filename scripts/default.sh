@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Session Name
-SESSION="Default"
+SESSION="WorkSpace"
 SESSIONEXISTS=$(tmux list-sessions | grep $SESSION)
 
 if ["$SESSIONEXISTS" = ""]
@@ -20,12 +20,6 @@ then
 
   # Split pane 2 in 2
   tmux selectp -t 2
-  tmux splitw -h
-  tmux resize-pane -x 50
-  tmux send-keys "clear" C-m
-
-  # Split pane 3 in 2
-  tmux selectp -t 3
   tmux splitw -h
   tmux send-keys "clear" C-m
 
