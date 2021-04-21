@@ -55,6 +55,11 @@ set tabline=%!MyTabLine()
 "Ruby formatter
 let g:rufo_auto_formatting = 1
 
+"Python formatter
+let g:autopep8_on_save = 1
+let g:autopep8_disable_show_diff=1
+let g:autopep8_indent_size=2
+
 " Airline theme
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
@@ -93,6 +98,7 @@ Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'arcticicestudio/nord-vim'
+Plug 'tell-k/vim-autopep8'
 
 call plug#end()
 

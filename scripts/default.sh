@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Session Name
-SESSION="WorkSpace"
+SESSION="DEV"
 SESSIONEXISTS=$(tmux list-sessions | grep $SESSION)
 
 if ["$SESSIONEXISTS" = ""]
@@ -26,22 +26,10 @@ then
   # Go back to pane 1
   tmux selectp -t 1
 
-  # Create a new window for utils
-  tmux new-window -t $SESSION:2 -n Utils
+  # Create a new window for extras
+  tmux new-window -t $SESSION:2 -n Extras
 
-  # Split window Utils in 2
-  tmux splitw -h -p 25
-  tmux clock-mode
-
-  # Split pane htop
-  tmux selectp -t 2
-  tmux splitw -v
-  tmux send-keys "htop" C-m
-
-  # Create a new window for IRC
-  tmux new-window -t $SESSION:3 -n IRC
-
-  # Go back to window Vim
+  # Go back to vim window
   tmux select-window -t $SESSION:1
 fi
 
