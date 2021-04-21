@@ -3,4 +3,7 @@
 nitrogen --restore &
 picom &
 nm-applet &
-setxkbmap latam &
+keepassxc &
+brave &
+slack &
+thunderbird &

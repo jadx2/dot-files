@@ -3,7 +3,7 @@ from typing import List  # noqa: F401
 import os
 import subprocess
 from libqtile import bar, layout, widget, extension, hook, qtile
-from libqtile.config import Click, Drag, Group, Key, Match, Screen
+from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown
 from libqtile.lazy import lazy
 
 # Initial Variables
@@ -66,6 +66,9 @@ keys = [
         dmenu_height=20,
         fontsize=9,
     ))),
+    Key([], "F12",
+        lazy.group["scratchpad"].dropdown_toggle('term'),
+        desc='Dropdown terminal'),
 
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
@@ -88,31 +91,37 @@ keys = [
 ]
 
 # Groups
+groups = (
+    Group("1.", layout='max', matches=[
+          Match(wm_class=["brave-browser"])], exclusive=True),
+    Group("2.", layout='monadtall'),
+    Group("3.", layout='monadtall'),
+    Group("4.", layout='monadtall', matches=[
+          Match(wm_class=["slack"])]),
+    Group("5.", layout='max', matches=[Match(wm_class=["spotify"])]),
+    Group("6.", layout='max', matches=[Match(wm_class=["zoom"])]),
+    Group("7.", layout='max', matches=[
+          Match(wm_class=["keepassxc"])], exclusive=True),
+    Group("8.", layout='monadtall', matches=[
+          Match(wm_class=["Thunderbird"])]),
+    ScratchPad('scratchpad', [DropDown(
+        'term', terminal, width=0.9, height=0.9,
+        x=0.05, opacity=0.9
+    )])
+)
 
-group_names = [("WWW", {'layout': 'max'}),
-               ("DEV", {'layout': 'monadtall'}),
-               ("SYS", {'layout': 'monadtall'}),
-               ("CHAT", {'layout': 'monadtall'}),
-               ("VIDEO", {'layout': 'max'}),
-               ("MUSIC", {'layout': 'max'}),
-               ("KEEPASSXC", {'layout': 'max'}),
-               ("EXTRAS", {'layout': 'monadtall'})]
-
-groups = [Group(name, **kwargs) for name, kwargs in group_names]
-
-for i, (name, kwargs) in enumerate(group_names, 1):
+for i, group in enumerate(groups, 1):
   # Switch to another group
-  keys.append(Key(["control"], str(i), lazy.group[name].toscreen()))
+  keys.append(Key(["control"], str(i), lazy.group[group.name].toscreen()))
   # Send current window to another group
-  keys.append(Key([alt, "shift"], str(i), lazy.window.togroup(name)))
+  keys.append(Key([alt, "shift"], str(i), lazy.window.togroup(group.name)))
 
 # Layouts
 
 layouts = [
     layout.Max(),
     layout.Floating(
-        border_normal=black,
-        border_focus=purple,
+        border_width=0,
     ),
     layout.MonadTall(
         align="MonadTall._left",
@@ -124,7 +133,7 @@ layouts = [
     ),
 ]
 
-### Screens and Widgets
+# Screens and Widgets
 widget_defaults = dict()
 extension_defaults = widget_defaults.copy()
 
@@ -139,7 +148,7 @@ screens = [
                 widget.GroupBox(
                     foreground=white,
                     inactive=white,
-                    fontsize=12,
+                    fontsize=14,
                     highlight_color=orange,
                     borderwidth=0,
                     highlight_method="line",
@@ -152,8 +161,8 @@ screens = [
                     fontsize=12,
                 ),
                 widget.TextBox(
-                    text="Net:",
-                    fontsize=12,
+                    text="",
+                    fontsize=16,
                     foreground=orange,
                 ),
                 widget.Net(
@@ -164,12 +173,12 @@ screens = [
                 ),
                 widget.Sep(
                     foreground=black,
-                    padding=9,
+                    padding=5,
                 ),
                 widget.TextBox(
-                    text="⟳",
+                    text="",
                     padding=2,
-                    fontsize=18,
+                    fontsize=16,
                     foreground=light_blue,
                 ),
                 widget.CheckUpdates(
@@ -184,12 +193,12 @@ screens = [
                 ),
                 widget.Sep(
                     foreground=black,
-                    padding=9,
+                    padding=5,
                 ),
                 widget.TextBox(
-                    text="Vol:",
+                    text="",
                     padding=2,
-                    fontsize=12,
+                    fontsize=16,
                     foreground=yellow,
                 ),
                 widget.Volume(
@@ -199,13 +208,13 @@ screens = [
                 ),
                 widget.Sep(
                     foreground=black,
-                    padding=9,
+                    padding=5,
                 ),
                 widget.Systray(
                 ),
                 widget.Sep(
                     foreground=black,
-                    padding=9,
+                    padding=5,
                 ),
                 widget.Clock(
                     foreground=green,
@@ -255,7 +264,7 @@ focus_on_window_activation = "smart"
 # Run autostart.sh at start
 
 
-@hook.subscribe.startup_once
+@ hook.subscribe.startup_once
 def start_once():
   home = os.path.expanduser('~/.config/qtile/autostart.sh')
   subprocess.call([home])
