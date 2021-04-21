@@ -93,17 +93,17 @@ keys = [
 # Groups
 groups = (
     Group("1.", layout='max', matches=[
-          Match(wm_class=["brave-browser"])], exclusive=True),
+          Match(wm_class=["brave-browser"])], exclusive=True, spawn="brave"),
     Group("2.", layout='monadtall'),
     Group("3.", layout='monadtall'),
     Group("4.", layout='monadtall', matches=[
-          Match(wm_class=["slack"])]),
+          Match(wm_class=["slack"])], spawn="slack"),
     Group("5.", layout='max', matches=[Match(wm_class=["spotify"])]),
     Group("6.", layout='max', matches=[Match(wm_class=["zoom"])]),
     Group("7.", layout='max', matches=[
-          Match(wm_class=["keepassxc"])], exclusive=True),
+          Match(wm_class=["keepassxc"])], exclusive=True, spawn="keepassxc"),
     Group("8.", layout='monadtall', matches=[
-          Match(wm_class=["Thunderbird"])]),
+          Match(wm_class=["Thunderbird"])], spawn="thunderbird"),
     ScratchPad('scratchpad', [DropDown(
         'term', terminal, width=0.9, height=0.9,
         x=0.05, opacity=0.9
@@ -156,24 +156,20 @@ screens = [
                     urgent_alert_method="line",
                     urgent_border=red,
                 ),
-                widget.WindowName(
-                    foreground=purple,
-                    fontsize=12,
+                widget.Sep(
+                    foreground=white,
+                    padding=5,
                 ),
-                widget.TextBox(
-                    text="",
-                    fontsize=16,
-                    foreground=orange,
-                ),
-                widget.Net(
-                    interface="enp3s0",
-                    format='{down}↓↑{up}',
-                    foreground=orange,
+                widget.CurrentLayout(
                     fontsize=12,
                 ),
                 widget.Sep(
-                    foreground=black,
+                    foreground=white,
                     padding=5,
+                ),
+                widget.WindowName(
+                    foreground=purple,
+                    fontsize=12,
                 ),
                 widget.TextBox(
                     text="",
