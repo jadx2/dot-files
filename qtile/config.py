@@ -69,6 +69,7 @@ keys = [
     Key([], "F12",
         lazy.group["scratchpad"].dropdown_toggle('term'),
         desc='Dropdown terminal'),
+    Key([mod], "s", lazy.spawn("slock"), desc="Lock Screen"),
 
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
@@ -134,6 +135,7 @@ layouts = [
 ]
 
 # Screens and Widgets
+
 widget_defaults = dict()
 extension_defaults = widget_defaults.copy()
 
@@ -189,7 +191,7 @@ screens = [
                 ),
                 widget.Sep(
                     foreground=black,
-                    padding=5,
+                    padding=4,
                 ),
                 widget.TextBox(
                     text="",
@@ -204,16 +206,16 @@ screens = [
                 ),
                 widget.Sep(
                     foreground=black,
-                    padding=5,
+                    padding=4,
                 ),
                 widget.Systray(
                 ),
                 widget.Sep(
                     foreground=black,
-                    padding=5,
+                    padding=4,
                 ),
                 widget.Clock(
-                    foreground=green,
+                    foreground=white,
                     fontsize=12,
                     format="%A, %d %B  %H:%M "
                 ),
