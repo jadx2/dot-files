@@ -96,11 +96,13 @@ groups = (
           Match(wm_class=["brave-browser"])], exclusive=True, spawn="brave"),
     Group(" DEV", layout='monadtall'),
     Group(" MAIL", layout='monadtall', matches=[
-          Match(wm_class=["Thunderbird"])], spawn="thunderbird"),
+          Match(wm_class=["Thunderbird"])], spawn="thunderbird", exclusive=True),
     Group(" CHAT", layout='monadtall', matches=[
           Match(wm_class=["slack", "telegram-desktop"])], spawn=["slack", "telegram-desktop"]),
-    Group(" MUSIC", layout='max', matches=[Match(wm_class=["spotify"])]),
-    Group(" VIDEO", layout='max', matches=[Match(wm_class=["zoom"])]),
+    Group(" MUSIC", layout='monadtall', matches=[
+          Match(wm_class=["spotify"])], exclusive=True),
+    Group(" VIDEO", layout='monadtall', matches=[
+          Match(wm_class=["zoom", "vlc"])], exclusive=True),
     Group(" PASS", layout='max', matches=[
           Match(wm_class=["keepassxc"])], exclusive=True, spawn="keepassxc"),
     Group(" EXTRAS", layout='monadtall'),
@@ -201,7 +203,7 @@ screens = [
                     colour_no_updates=fg_color,
                     fontsize=13,
                     distro="Arch",
-                    display_format="Updates:{updates}",
+                    display_format="{updates}",
                     no_update_string="n/a",
                     update_interval=1800,
                 ),
