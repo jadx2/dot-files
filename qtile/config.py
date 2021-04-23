@@ -14,15 +14,14 @@ terminal = "alacritty"
 
 # Colors Variables
 
-black = "#2e3440"
-white = "#eceff4"
-blue = "#5e81ac"
-light_blue = "#88c0d0"
-red = "#bf616a"
-orange = "#d08770"
-yellow = "#ebcb8b"
-green = "#a3be8c"
-purple = "#b48ead"
+bg_color = "#2e3440"
+fg_color = "#eceff4"
+urgent_color = "#bf616a"
+border_color = "#b48ead"
+
+# Font
+
+my_font = "source code pro"
 
 # Key-bindings
 
@@ -59,10 +58,10 @@ keys = [
     Key([mod, "control"], "r", lazy.restart(), desc="Restart Qtile"),
     Key([mod], 'r', lazy.run_extension(extension.DmenuRun(
         dmenu_prompt="Run: ",
-        background=black,
-        foreground=white,
-        selected_background=orange,
-        selected_foreground=white,
+        background=bg_color,
+        foreground=fg_color,
+        selected_background=border_color,
+        selected_foreground=fg_color,
         dmenu_height=20,
         fontsize=9,
     ))),
@@ -93,18 +92,18 @@ keys = [
 
 # Groups
 groups = (
-    Group("1.", layout='max', matches=[
+    Group(" WWW", layout='max', matches=[
           Match(wm_class=["brave-browser"])], exclusive=True, spawn="brave"),
-    Group("2.", layout='monadtall'),
-    Group("3.", layout='monadtall'),
-    Group("4.", layout='monadtall', matches=[
-          Match(wm_class=["slack"])], spawn="slack"),
-    Group("5.", layout='max', matches=[Match(wm_class=["spotify"])]),
-    Group("6.", layout='max', matches=[Match(wm_class=["zoom"])]),
-    Group("7.", layout='max', matches=[
-          Match(wm_class=["keepassxc"])], exclusive=True, spawn="keepassxc"),
-    Group("8.", layout='monadtall', matches=[
+    Group(" DEV", layout='monadtall'),
+    Group(" MAIL", layout='monadtall', matches=[
           Match(wm_class=["Thunderbird"])], spawn="thunderbird"),
+    Group(" CHAT", layout='monadtall', matches=[
+          Match(wm_class=["slack", "telegram-desktop"])], spawn=["slack", "telegram-desktop"]),
+    Group(" MUSIC", layout='max', matches=[Match(wm_class=["spotify"])]),
+    Group(" VIDEO", layout='max', matches=[Match(wm_class=["zoom"])]),
+    Group(" PASS", layout='max', matches=[
+          Match(wm_class=["keepassxc"])], exclusive=True, spawn="keepassxc"),
+    Group(" EXTRAS", layout='monadtall'),
     ScratchPad('scratchpad', [DropDown(
         'term', terminal, width=0.9, height=0.9,
         x=0.05, opacity=0.9
@@ -122,13 +121,15 @@ for i, group in enumerate(groups, 1):
 layouts = [
     layout.Max(),
     layout.Floating(
-        border_width=0,
+        border_width=2,
+        border_normal=bg_color,
+        border_focus=border_color,
     ),
     layout.MonadTall(
         align="MonadTall._left",
         border_width=2,
-        border_normal=black,
-        border_focus=purple,
+        border_normal=bg_color,
+        border_focus=border_color,
         margin=4,
         ratio=0.5,
     ),
@@ -136,7 +137,8 @@ layouts = [
 
 # Screens and Widgets
 
-widget_defaults = dict()
+widget_defaults = dict(
+)
 extension_defaults = widget_defaults.copy()
 
 screens = [
@@ -144,89 +146,96 @@ screens = [
         top=bar.Bar(
             [
                 widget.Sep(
-                    foreground=black,
+                    foreground=bg_color,
                     padding=4,
                 ),
                 widget.GroupBox(
-                    foreground=white,
-                    inactive=white,
-                    fontsize=14,
-                    highlight_color=orange,
+                    font=my_font,
+                    foreground=fg_color,
+                    inactive=fg_color,
+                    fontsize=12,
+                    padding_x=4,
+                    highlight_color=border_color,
                     borderwidth=0,
                     highlight_method="line",
                     rounded=False,
                     urgent_alert_method="line",
-                    urgent_border=red,
+                    urgent_border=urgent_color,
                 ),
                 widget.Sep(
-                    foreground=white,
+                    foreground=fg_color,
                     padding=5,
+                    size_percent=100,
                 ),
                 widget.CurrentLayout(
-                    fontsize=12,
+                    font=my_font,
+                    fontsize=13,
                 ),
                 widget.Sep(
-                    foreground=white,
+                    foreground=fg_color,
                     padding=5,
+                    size_percent=100,
                 ),
                 widget.WindowName(
-                    foreground=purple,
-                    fontsize=12,
+                    font=my_font,
+                    foreground=border_color,
+                    fontsize=13,
                 ),
-                widget.TextBox(
-                    text="",
-                    padding=2,
-                    fontsize=16,
-                    foreground=light_blue,
+                widget.Net(
+                    interface="enp3s0",
+                    fontsize=13,
+                    foreground=fg_color,
+                    format="{down}",
+                    fmt=" {}",
+                ),
+                widget.Sep(
+                    foreground=fg_color,
+                    padding=4,
+                    size_percent=60,
                 ),
                 widget.CheckUpdates(
-                    foreground=light_blue,
-                    colour_have_updates=light_blue,
-                    colour_no_updates=light_blue,
-                    fontsize=12,
-                    distro="Arch_checkupdates",
+                    fmt=" {}",
+                    font=my_font,
+                    foreground=fg_color,
+                    colour_have_updates=fg_color,
+                    colour_no_updates=fg_color,
+                    fontsize=13,
+                    distro="Arch",
                     display_format="Updates:{updates}",
-                    no_update_string="-",
+                    no_update_string="n/a",
                     update_interval=1800,
                 ),
                 widget.Sep(
-                    foreground=black,
+                    foreground=fg_color,
                     padding=4,
-                ),
-                widget.TextBox(
-                    text="",
-                    padding=2,
-                    fontsize=16,
-                    foreground=yellow,
+                    size_percent=60,
                 ),
                 widget.Volume(
-                    foreground=yellow,
-                    fontsize=12,
+                    fmt=" {}",
+                    font=my_font,
+                    foreground=fg_color,
+                    fontsize=13,
                     volume_app="pavucontrol",
                 ),
                 widget.Sep(
-                    foreground=black,
+                    foreground=fg_color,
                     padding=4,
-                ),
-                widget.Systray(
-                ),
-                widget.Sep(
-                    foreground=black,
-                    padding=4,
+                    size_percent=60,
                 ),
                 widget.Clock(
-                    foreground=white,
-                    fontsize=12,
-                    format="%A, %d %B  %H:%M "
+                    font=my_font,
+                    foreground=fg_color,
+                    fontsize=13,
+                    format=" %A, %d %B -  %H:%M"
                 ),
                 widget.Sep(
-                    foreground=black,
+                    foreground=bg_color,
                     padding=4,
                 )
             ],
             20,
-            background=black,
-            opacity=0.8,
+            background=bg_color,
+            opacity=0.7,
         ),
     ),
 ]

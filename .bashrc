@@ -95,8 +95,8 @@ alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
 alias np='nano -w PKGBUILD'
 alias more=less
-alias tdef="default.sh"
-alias tkill="tmux kill-server"
+alias tm="default.sh"
+alias tk="tmux kill-server"
 
 xhost +local:root > /dev/null 2>&1
 
@@ -139,6 +139,12 @@ ex ()
     echo "'$1' is not a valid file"
   fi
 }
+
+# Start Xorg at login
+if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+  exec startx
+fi
+
 export PATH="$PATH:$HOME/scripts"
 neofetch
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
