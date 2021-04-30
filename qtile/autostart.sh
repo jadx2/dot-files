@@ -1,5 +1,5 @@
 #!/bin/bash
 
 nitrogen --restore &
-picom &
-nm-applet &
+picom --experimental-backends &
+dunst &

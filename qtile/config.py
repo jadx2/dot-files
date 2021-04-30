@@ -7,24 +7,21 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, 
 from libqtile.lazy import lazy
 
 # Initial Variables
-
 mod = "mod4"
 alt = "mod1"
 terminal = "alacritty"
 
 # Colors Variables
-
-bg_color = "#2e3440"
-fg_color = "#eceff4"
-urgent_color = "#bf616a"
-border_color = "#b48ead"
+bg_color = "#1a1b26"
+fg_color = "#cfc9c2"
+urgent_color = "#f7768e"
+border_color = "#e0af68"
 
 # Font
-
-my_font = "source code pro"
+my_font_size = 13
+my_font = "Noto"
 
 # Key-bindings
-
 keys = [
     # Switch between windows
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
@@ -35,23 +32,20 @@ keys = [
         desc="Move window focus to other window"),
 
     # Move windows between left/right columns or move up/down in current stack.
-    Key([mod, "shift"], "h", lazy.layout.shuffle_left(),
+    Key([mod, "shift"], "h", lazy.layout.swap_left(),
         desc="Move window to the left"),
-    Key([mod, "shift"], "l", lazy.layout.shuffle_right(),
+    Key([mod, "shift"], "l", lazy.layout.swap_right(),
         desc="Move window to the right"),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down(),
         desc="Move window down"),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
 
     # Grow windows. If current window is on the edge of screen and direction
-    Key([mod, "control"], "h", lazy.layout.grow_left(),
-        desc="Grow window to the left"),
-    Key([mod, "control"], "l", lazy.layout.grow_right(),
-        desc="Grow window to the right"),
-    Key([mod, "control"], "j", lazy.layout.grow_down(),
-        desc="Grow window down"),
-    Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
-    Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
+    Key([mod, "control"], "l", lazy.layout.grow(),
+        desc="Grow window"),
+    Key([mod, "control"], "h", lazy.layout.shrink(),
+        desc="Shrink window"),
+    Key([mod], "n", lazy.layout.reset(), desc="Reset all window sizes"),
 
     # Lunchers
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
@@ -92,23 +86,23 @@ keys = [
 
 # Groups
 groups = (
-    Group(" WWW", layout='max', matches=[
+    Group(" Web", layout='max', matches=[
           Match(wm_class=["brave-browser"])], exclusive=True, spawn="brave"),
-    Group(" DEV", layout='monadtall'),
-    Group(" MAIL", layout='monadtall', matches=[
+    Group(" Dev", layout='monadtall'),
+    Group(" Mail", layout='monadtall', matches=[
           Match(wm_class=["Thunderbird"])], spawn="thunderbird", exclusive=True),
-    Group(" CHAT", layout='monadtall', matches=[
+    Group(" Chat", layout='monadtall', matches=[
           Match(wm_class=["slack", "telegram-desktop"])], spawn=["slack", "telegram-desktop"]),
-    Group(" MUSIC", layout='monadtall', matches=[
-          Match(wm_class=["spotify"])], exclusive=True),
-    Group(" VIDEO", layout='monadtall', matches=[
+    Group(" Music", layout='monadtall', spawn="spotify"),
+    Group(" Video", layout='monadtall', matches=[
           Match(wm_class=["zoom", "vlc"])], exclusive=True),
-    Group(" PASS", layout='max', matches=[
+    Group(" Pass", layout='max', matches=[
           Match(wm_class=["keepassxc"])], exclusive=True, spawn="keepassxc"),
-    Group(" EXTRAS", layout='monadtall'),
+    Group(" Extras", layout='monadtall', matches=[
+          Match(wm_class=["pcmanfm", "qbittorrent"])], spawn=["pcmanfm", "qbittorrent"]),
     ScratchPad('scratchpad', [DropDown(
         'term', terminal, width=0.9, height=0.9,
-        x=0.05, opacity=0.9
+        x=0.05
     )])
 )
 
@@ -119,7 +113,6 @@ for i, group in enumerate(groups, 1):
   keys.append(Key([alt, "shift"], str(i), lazy.window.togroup(group.name)))
 
 # Layouts
-
 layouts = [
     layout.Max(),
     layout.Floating(
@@ -128,19 +121,15 @@ layouts = [
         border_focus=border_color,
     ),
     layout.MonadTall(
-        align="MonadTall._left",
         border_width=2,
         border_normal=bg_color,
         border_focus=border_color,
-        margin=4,
-        ratio=0.5,
+        margin=6,
     ),
 ]
 
 # Screens and Widgets
-
-widget_defaults = dict(
-)
+widget_defaults = dict()
 extension_defaults = widget_defaults.copy()
 
 screens = [
@@ -153,15 +142,16 @@ screens = [
                 ),
                 widget.GroupBox(
                     font=my_font,
+                    this_current_screen_border=border_color,
                     foreground=fg_color,
                     inactive=fg_color,
-                    fontsize=12,
+                    active=fg_color,
+                    fontsize=my_font_size,
                     padding_x=4,
-                    highlight_color=border_color,
                     borderwidth=0,
-                    highlight_method="line",
+                    highlight_method="text",
                     rounded=False,
-                    urgent_alert_method="line",
+                    urgent_alert_method="text",
                     urgent_border=urgent_color,
                 ),
                 widget.Sep(
@@ -171,7 +161,8 @@ screens = [
                 ),
                 widget.CurrentLayout(
                     font=my_font,
-                    fontsize=13,
+                    fontsize=my_font_size,
+                    foreground=border_color,
                 ),
                 widget.Sep(
                     foreground=fg_color,
@@ -181,11 +172,11 @@ screens = [
                 widget.WindowName(
                     font=my_font,
                     foreground=border_color,
-                    fontsize=13,
+                    fontsize=my_font_size,
                 ),
                 widget.Net(
                     interface="enp3s0",
-                    fontsize=13,
+                    fontsize=my_font_size,
                     foreground=fg_color,
                     format="{down}",
                     fmt=" {}",
@@ -201,10 +192,10 @@ screens = [
                     foreground=fg_color,
                     colour_have_updates=fg_color,
                     colour_no_updates=fg_color,
-                    fontsize=13,
+                    fontsize=my_font_size,
                     distro="Arch",
                     display_format="{updates}",
-                    no_update_string="n/a",
+                    no_update_string="N/A",
                     update_interval=1800,
                 ),
                 widget.Sep(
@@ -216,7 +207,7 @@ screens = [
                     fmt=" {}",
                     font=my_font,
                     foreground=fg_color,
-                    fontsize=13,
+                    fontsize=my_font_size,
                     volume_app="pavucontrol",
                 ),
                 widget.Sep(
@@ -227,7 +218,7 @@ screens = [
                 widget.Clock(
                     font=my_font,
                     foreground=fg_color,
-                    fontsize=13,
+                    fontsize=my_font_size,
                     format=" %A, %d %B -  %H:%M"
                 ),
                 widget.Sep(
@@ -237,13 +228,12 @@ screens = [
             ],
             20,
             background=bg_color,
-            opacity=0.7,
+            opacity=0.9,
         ),
     ),
 ]
 
 # Mouse options
-
 mouse = [
     Drag([mod], "Button1", lazy.window.set_position_floating(),
          start=lazy.window.get_position()),
@@ -273,10 +263,10 @@ focus_on_window_activation = "smart"
 # Run autostart.sh at start
 
 
-@ hook.subscribe.startup_once
+@hook.subscribe.startup_once
 def start_once():
   home = os.path.expanduser('~/.config/qtile/autostart.sh')
   subprocess.call([home])
 
 
-wmname = "LG3D"
+wmname = "QTile"

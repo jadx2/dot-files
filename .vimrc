@@ -64,12 +64,10 @@ let g:autopep8_indent_size=2
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
-let g:airline_theme='nord'
+let g:airline_theme='tokyonight'
 let g:airline#extensions#coc#enabled = 1
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 let g:airline_symbols.branch = ''
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
 
 " Autocomplition
 set wildmode=longest,list,full
@@ -99,13 +97,16 @@ Plug 'SirVer/ultisnips'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'arcticicestudio/nord-vim'
 Plug 'tell-k/vim-autopep8'
+Plug 'ghifarit53/tokyonight-vim'
 
 call plug#end()
 
 " Color Scheme
-colorscheme nord
-set background=dark
-hi Normal guibg=NONE ctermbg=NONE
+colorscheme tokyonight
+" set background=dark
+" hi Normal guibg=NONE ctermbg=NONE
+let g:tokyonight_style='night'
+let g:tokyonight_enable_italic=1
 
 " NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
