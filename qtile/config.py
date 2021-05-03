@@ -12,10 +12,10 @@ alt = "mod1"
 terminal = "alacritty"
 
 # Colors Variables
-bg_color = "#1a1b26"
-fg_color = "#cfc9c2"
-urgent_color = "#f7768e"
-border_color = "#e0af68"
+bg_color = "#282828"
+fg_color = "#ebdbb2"
+urgent_color = "#fb4934"
+border_color = "#d79921"
 
 # Font
 my_font_size = 13
