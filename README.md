@@ -10,3 +10,4 @@
 - alacrity.yml
 - coc-config.txt
 - scripts
+- dunstrc
