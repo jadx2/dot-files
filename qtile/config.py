@@ -50,6 +50,7 @@ keys = [
     # Lunchers
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     Key([mod, "control"], "r", lazy.restart(), desc="Restart Qtile"),
+    Key([mod, "shift"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], 'r', lazy.run_extension(extension.DmenuRun(
         dmenu_prompt="Run: ",
         background=bg_color,
@@ -88,18 +89,19 @@ keys = [
 groups = (
     Group(" Web", layout='max', matches=[
           Match(wm_class=["brave-browser"])], exclusive=True, spawn="brave"),
-    Group(" Dev", layout='monadtall'),
+    Group(" Dev", layout='monadtall', spawn=terminal),
     Group(" Mail", layout='monadtall', matches=[
           Match(wm_class=["Thunderbird"])], spawn="thunderbird", exclusive=True),
     Group(" Chat", layout='monadtall', matches=[
           Match(wm_class=["slack", "telegram-desktop"])], spawn=["slack", "telegram-desktop"]),
-    Group(" Music", layout='monadtall', spawn="spotify"),
-    Group(" Video", layout='monadtall', matches=[
-          Match(wm_class=["zoom", "vlc"])], exclusive=True),
+    Group(" Media", layout='monadtall', matches=[
+          Match(wm_class=["zoom", "vlc", "spotify"])], exclusive=True, spawn="spotify"),
+    Group(" Games", layout='monadtall', matches=[
+          Match(wm_class=["scummvm", "lutris", "battle.net.exe", "sc2_x64.exe"])], exclusive=True),
     Group(" Pass", layout='max', matches=[
           Match(wm_class=["keepassxc"])], exclusive=True, spawn="keepassxc"),
     Group(" Extras", layout='monadtall', matches=[
-          Match(wm_class=["pcmanfm", "qbittorrent"])], spawn=["pcmanfm", "qbittorrent"]),
+          Match(wm_class=["pcmanfm", "qbittorrent", "pamac-manager"])], spawn="pcmanfm"),
     ScratchPad('scratchpad', [DropDown(
         'term', terminal, width=0.9, height=0.9,
         x=0.05
@@ -173,6 +175,7 @@ screens = [
                     font=my_font,
                     foreground=border_color,
                     fontsize=my_font_size,
+                    max_chars=100,
                 ),
                 widget.Net(
                     interface="enp3s0",
@@ -186,17 +189,8 @@ screens = [
                     padding=4,
                     size_percent=60,
                 ),
-                widget.CheckUpdates(
-                    fmt=" {}",
-                    font=my_font,
-                    foreground=fg_color,
-                    colour_have_updates=fg_color,
-                    colour_no_updates=fg_color,
-                    fontsize=my_font_size,
-                    distro="Arch",
-                    display_format="{updates}",
-                    no_update_string="N/A",
-                    update_interval=1800,
+                widget.Systray(
+                    icon_size=15,
                 ),
                 widget.Sep(
                     foreground=fg_color,
@@ -219,7 +213,19 @@ screens = [
                     font=my_font,
                     foreground=fg_color,
                     fontsize=my_font_size,
-                    format=" %A, %d %B -  %H:%M"
+                    format=" %A, %d %B -  %H:%M"
+                ),
+                widget.Sep(
+                    foreground=fg_color,
+                    padding=4,
+                    size_percent=60,
+                ),
+                widget.QuickExit(
+                    font=my_font,
+                    foreground=fg_color,
+                    fontsize=my_font_size,
+                    default_text='',
+                    countdown_format='[ {}"]'
                 ),
                 widget.Sep(
                     foreground=bg_color,

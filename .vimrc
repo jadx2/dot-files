@@ -18,6 +18,7 @@ set number
 set t_Co=256
 set splitbelow
 set splitright
+set backupcopy=yes
 au FileType * set fo-=c fo-=r fo-=o
 
 " Tabline
