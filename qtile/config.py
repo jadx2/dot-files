@@ -130,6 +130,11 @@ layouts = [
     ),
 ]
 
+
+def power_off():
+  qtile.cmd_spawn("poweroff")
+
+
 # Screens and Widgets
 widget_defaults = dict()
 extension_defaults = widget_defaults.copy()
@@ -225,7 +230,8 @@ screens = [
                     foreground=fg_color,
                     fontsize=my_font_size,
                     default_text='',
-                    countdown_format='[ {}"]'
+                    countdown_format='',
+                    mouse_callbacks={'Button2': power_off},
                 ),
                 widget.Sep(
                     foreground=bg_color,
