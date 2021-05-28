@@ -93,7 +93,7 @@ groups = (
     Group(" Mail", layout='monadtall', matches=[
           Match(wm_class=["Thunderbird"])], spawn="thunderbird", exclusive=True),
     Group(" Chat", layout='monadtall', matches=[
-          Match(wm_class=["slack", "telegram-desktop"])], spawn=["slack", "telegram-desktop"]),
+          Match(wm_class=["slack", "telegram-desktop", "discord"])], spawn=["slack", "telegram-desktop", "discord"]),
     Group(" Media", layout='monadtall', matches=[
           Match(wm_class=["zoom", "vlc", "spotify"])], exclusive=True, spawn="spotify"),
     Group(" Games", layout='monadtall', matches=[
