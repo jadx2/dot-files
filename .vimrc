@@ -120,6 +120,10 @@ let g:UltiSnipsExpandTrigger="<leader><tab>"
 let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
 let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
 
+"React comment
+autocmd! BufRead,BufNewFile *.jsx setlocal filetype=javascript.jsx
+autocmd FileType javascript.jsx setlocal commentstring={/*\ %s\ */}
+
 "FzF
 map <C-P> :FZF<CR>
 

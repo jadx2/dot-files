@@ -89,19 +89,19 @@ keys = [
 groups = (
     Group(" Web", layout='max', matches=[
           Match(wm_class=["brave-browser"])], exclusive=True, spawn="brave"),
-    Group(" Dev", layout='monadtall', spawn=terminal),
+    Group(" Dev", layout='max', spawn=terminal),
     Group(" Mail", layout='monadtall', matches=[
           Match(wm_class=["Thunderbird"])], spawn="thunderbird", exclusive=True),
     Group(" Chat", layout='monadtall', matches=[
-          Match(wm_class=["slack", "telegram-desktop", "discord"])], spawn=["slack", "telegram-desktop", "discord"]),
-    Group(" Media", layout='monadtall', matches=[
+          Match(wm_class=["slack", "telegram-desktop", "discord"])], spawn=["slack", "discord"]),
+    Group(" Media", layout='max', matches=[
           Match(wm_class=["zoom", "vlc", "spotify"])], exclusive=True, spawn="spotify"),
     Group(" Games", layout='monadtall', matches=[
           Match(wm_class=["scummvm", "lutris", "battle.net.exe", "sc2_x64.exe"])], exclusive=True),
     Group(" Pass", layout='max', matches=[
           Match(wm_class=["keepassxc"])], exclusive=True, spawn="keepassxc"),
     Group(" Extras", layout='monadtall', matches=[
-          Match(wm_class=["pcmanfm", "qbittorrent", "pamac-manager"])], spawn="pcmanfm"),
+          Match(wm_class=["pcmanfm", "qbittorrent"])], spawn="pcmanfm"),
     ScratchPad('scratchpad', [DropDown(
         'term', terminal, width=0.9, height=0.9,
         x=0.05
