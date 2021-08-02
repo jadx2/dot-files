@@ -1,0 +1,11 @@
+{
+  "coc.preferences.formatOnSaveFiletypes": ["css", "markdown", "javascriptreact", "javascript", "html", "ruby", "eruby", "scss"],
+  "prettier.printWidth": 80,
+  "prettier.tabWidth": 2,
+  "prettier.trailingComma": "all",
+  "prettier.singleQuote": true,
+  "emmet.includeLanguages": {"eruby": "html", "javascript": "javascriptreact"},
+  "snippets.userSnippetsDirectory": "~/.config/nvim/snips",
+  "snippets.extends": {"javascriptreact": ["javascript"]}
+
+}
