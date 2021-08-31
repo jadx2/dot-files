@@ -1,22 +1,22 @@
 # Coc-config
-
 {
-  "coc.preferences.formatOnSaveFiletypes": ["css", "markdown", "javascript", "html", "jsx", "ruby", "eruby", "scss", "javascriptreact"],
-  "prettier.printWidth": 60,
+  "prettier.eslintIntegration": true,
+  "prettier.printWidth": 80,
   "prettier.tabWidth": 2,
-  "prettier.trailingComma": "es5",
+  "prettier.trailingComma": "all",
   "prettier.singleQuote": true,
-  "emmet.includeLanguages": {"eruby": "html", "javascript": "javascriptreact", "jsx": "javascriptreact"}
+  "emmet.includeLanguages": {"eruby": "html", "javascript": "javascriptreact"},
+  "snippets.userSnippetsDirectory": "~/.config/nvim/snips",
+  "snippets.extends": {"javascriptreact": ["javascript"]}
 }
-
 # Coc-extensions
-
+coc-tsserver
+coc-snippets
 coc-prettier
+coc-pairs
 coc-json
 coc-eslint
-coc-pairs
 coc-emmet
 coc-cssmodules
-coc-tsserver
-coc-solargraph
 coc-css
+
