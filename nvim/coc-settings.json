@@ -1,5 +1,5 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": ["css", "markdown", "javascriptreact", "javascript", "html", "ruby", "eruby", "scss"],
+  "prettier.eslintIntegration": true,
   "prettier.printWidth": 80,
   "prettier.tabWidth": 2,
   "prettier.trailingComma": "all",

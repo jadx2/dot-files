@@ -3,7 +3,6 @@ syntax enable			"syntax on
 set hlsearch 			"highlight searched patterns
 set incsearch			"highlight patterns while typing
 set ruler			"show cursor position
-set nowrap    "No wrap long words
 set autoindent			"Indentation
 set smartindent			"makes indenting smart
 set foldmethod=indent "folding method

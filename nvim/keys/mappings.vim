@@ -39,3 +39,7 @@ map <leader>c gc
 " Remove last searched pattern
 nnoremap <CR> :noh<CR><CR>
 
+" Prettier 
+vmap <leader>f :Prettier<CR> 
+nmap <leader>f :Prettier<CR>
+
