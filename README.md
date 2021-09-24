@@ -11,3 +11,4 @@
 - coc-config.txt
 - scripts
 - dunstrc
+- Nvim
